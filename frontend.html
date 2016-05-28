@@ -3,13 +3,22 @@
 <body>
 
 <!-- Create a textbox and save text in it to file -->
-<textarea id="textbox">Type something here</textarea> 
+
+
+<select id="ddlViewBy">
+  <option value="1">Unix</option>
+  <option value="2" selected="selected">Windows</option>
+  <option value="3">Solaris</option>
+</select>
+
+
 <button onclick="generateFile()" id="create">Create file</button> 
+
 <a download="info.txt" id="downloadlink" style="display: none">Download</a>
 
+<!--<p>Click me to print Hello</p>
+<button onclick="myFunction()">Click me</button> -->
 
-<p>Click me to print Hello</p>
-<button onclick="myFunction()">Click me</button>
 
 
 <script>
@@ -18,28 +27,26 @@ function myFunction() {
 }
 
 function generateFile() {
-var textFile = null,
-  makeTextFile = function (text) {
-    var data = new Blob([text], {type: 'text/plain'});
-
+	var textFile = null,
+	makeTextFile = function (text) {
+	var data = new Blob([text], {type: 'text/plain'});
     // If we are replacing a previously generated file we need to
     // manually revoke the object URL to avoid memory leaks.
     if (textFile !== null) {
       window.URL.revokeObjectURL(textFile);
     }
-
     textFile = window.URL.createObjectURL(data);
-
     return textFile;
   };
 
 
+
   var create = document.getElementById('create'),
-    textbox = document.getElementById('textbox');
+    	ddlViewBy = document.getElementById('ddlViewBy');
 
   create.addEventListener('click', function () {
     var link = document.getElementById('downloadlink');
-    link.href = makeTextFile(textbox.value);
+	link.href = makeTextFile(ddlViewBy.options[ddlViewBy.selectedIndex].text);
     link.style.display = 'block';
   }, false);
 }
