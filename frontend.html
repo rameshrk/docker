@@ -1,13 +1,19 @@
 <!DOCTYPE html>
 <html>
 <body>
-
-<select id="ddlViewBy" >
+<p>
+<select id="OS" >
   <option value="1">Unix</option>
   <option value="2" selected="selected">Windows</option>
   <option value="3">Solaris</option>
 </select>
-
+<br>
+<select id="App" >
+  <option value="1">JBoss</option>
+  <option value="2" selected="selected">Tomcat</option>
+  <option value="3">Websphere</option>
+</select>
+</p>
 
 <button onclick="generateFile()" id="create">Create file</button> 
 
@@ -17,7 +23,7 @@
 
 function generateFile() {
 	var create = document.getElementById('create'),
-    	ddlViewBy = document.getElementById('ddlViewBy');
+    	OS = document.getElementById('OS');
 	var textFile = null,
 	makeTextFile = function (text) {
 	var data = new Blob([text], {type: 'text/plain'});
@@ -32,7 +38,9 @@ function generateFile() {
   
 
     var link = document.getElementById('downloadlink');
-	link.href = makeTextFile(ddlViewBy.options[ddlViewBy.selectedIndex].text);
+    data = OS.options[OS.selectedIndex].text; 		
+    data += " " + App.options[App.selectedIndex].text;
+	link.href = makeTextFile(data);
     link.style.display = 'block';
   
 
